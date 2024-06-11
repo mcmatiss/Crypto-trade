@@ -228,17 +228,17 @@ while (true)
         case 2:
             $sellIndex = (int) readline("Enter Currency Index: ");
             $sellAmount = (int) readline("Enter Sell Amount: ");
-            $account->removeFromPortfolio($sellIndex+1, $sellAmount);
-            $id = $account->portfolio()[$sellIndex+1]->id();
+            $id = $account->portfolio()[$sellIndex-1]->id();
             $soldCurrency = fetchServerData('id', $id);
-//            $value = $currency->quantity() * ($portfolioCurrencies
-//                    ->data
-//                    ->$id
-//                    ->quote
-//                    ->USD
-//                    ->price)
-//            ;
-//            $account->addFunds($sellAmount*);
+            $value = $soldCurrency
+                    ->data
+                    ->$id
+                    ->quote
+                    ->USD
+                    ->price
+            ;
+            $account->addFunds($sellAmount*$value);
+            $account->removeFromPortfolio($sellIndex-1, $sellAmount);
             break;
         case 3:
             $ticker = strtoupper(readline("Enter ticker symbol: "));
